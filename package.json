@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prettier:fix": "prettier --write .",
-    "lint:fix": "lint --fix ./src"
+    "lint:fix": "eslint --fix ./src"
   },
   "dependencies": {
     "react": "^18.3.1",

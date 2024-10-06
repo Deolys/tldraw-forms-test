@@ -1,1 +1,1 @@
-export { BaseShapeUtil } from "./base-shape";
+export { BaseShapeUtil } from './base-shape';

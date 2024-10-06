@@ -3,14 +3,15 @@ import {
   FileHelpers,
   HTMLContainer,
   RecordProps,
-  stopEventPropagation,
   T,
   TLBaseShape,
-} from "tldraw";
-import styles from "./base-shape.module.css";
+  stopEventPropagation,
+} from 'tldraw';
+
+import styles from './base-shape.module.css';
 
 type IBaseShape = TLBaseShape<
-  "base-shape",
+  'base-shape',
   {
     w: number;
     h: number;
@@ -20,7 +21,7 @@ type IBaseShape = TLBaseShape<
 >;
 
 export class BaseShapeUtil extends BaseBoxShapeUtil<IBaseShape> {
-  static override type = "base-shape" as const;
+  static override type = 'base-shape' as const;
   static override props: RecordProps<IBaseShape> = {
     w: T.number,
     h: T.number,
@@ -32,12 +33,12 @@ export class BaseShapeUtil extends BaseBoxShapeUtil<IBaseShape> {
     return true;
   }
 
-  getDefaultProps(): IBaseShape["props"] {
+  getDefaultProps(): IBaseShape['props'] {
     return {
       w: 200,
       h: 200,
-      text: "Text",
-      image: "",
+      text: 'Text',
+      image: '',
     };
   }
 
@@ -50,7 +51,7 @@ export class BaseShapeUtil extends BaseBoxShapeUtil<IBaseShape> {
         id={shape.id}
         onPointerDown={isEditing ? stopEventPropagation : undefined}
         style={{
-          pointerEvents: isEditing ? "all" : "none",
+          pointerEvents: isEditing ? 'all' : 'none',
           fontSize: 20,
         }}
       >
@@ -89,13 +90,11 @@ export class BaseShapeUtil extends BaseBoxShapeUtil<IBaseShape> {
                   }
                 }}
                 accept="image/*"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
               />
             </div>
           )}
-          <div
-            style={{ position: "absolute", top: height + 20, maxWidth: width }}
-          >
+          <div style={{ position: 'absolute', top: height + 20, maxWidth: width }}>
             {isEditing ? (
               <input
                 value={shape.props.text}
