@@ -2,9 +2,9 @@ import {
   BaseBoxShapeUtil,
   FileHelpers,
   HTMLContainer,
-  RecordProps,
+  type RecordProps,
   T,
-  TLBaseShape,
+  type TLBaseShape,
   stopEventPropagation,
 } from 'tldraw';
 

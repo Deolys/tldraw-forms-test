@@ -1,10 +1,10 @@
 import {
   AssetRecordType,
   DEFAULT_SUPPORTED_MEDIA_TYPE_LIST,
-  Editor,
+  type Editor,
   FileHelpers,
   StateNode,
-  TLShapeId,
+  type TLShapeId,
   createShapeId,
 } from 'tldraw';
 
