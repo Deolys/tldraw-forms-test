@@ -9,7 +9,8 @@ export class BaseShapeTool extends StateNode {
   }
 
   override onPointerDown() {
-    const { currentPagePoint } = this.editor.inputs;
+    const editor = this.editor;
+    const { currentPagePoint } = editor.inputs;
 
     const input = window.document.createElement('input');
     input.type = 'file';
@@ -22,7 +23,7 @@ export class BaseShapeTool extends StateNode {
       try {
         const imageUrl = await FileHelpers.blobToDataUrl(file);
         const { w, h } = await MediaHelpers.getImageSize(file);
-        this.editor.createShape({
+        editor.createShape({
           type: 'base-shape',
           x: currentPagePoint.x - OFFSET,
           y: currentPagePoint.y - OFFSET,

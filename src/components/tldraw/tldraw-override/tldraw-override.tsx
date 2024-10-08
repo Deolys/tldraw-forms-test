@@ -16,6 +16,7 @@ import 'tldraw/tldraw.css';
 import baseShapeIcon from '@/assets/icons/base-shape-icon.svg';
 import { BaseShapeUtil } from '@/custom-shapes/base-shape';
 import { BaseShapeTool } from '@/utils/custom-tools/create-base-shape';
+import { CardShapeTool } from '@/utils/custom-tools/create-card';
 
 const uiOverrides: TLUiOverrides = {
   tools(editor, tools) {
@@ -28,6 +29,15 @@ const uiOverrides: TLUiOverrides = {
         editor.setCurrentTool('base-shape');
       },
     };
+    tools.cardShape = {
+      id: 'card-shape',
+      icon: '',
+      label: 'Card shape',
+      kbd: 's',
+      onSelect: () => {
+        editor.setCurrentTool('card-shape');
+      },
+    };
     return tools;
   },
 };
@@ -35,11 +45,13 @@ const uiOverrides: TLUiOverrides = {
 const components: TLComponents = {
   Toolbar: (props) => {
     const tools = useTools();
-    const isStickerSelected = useIsToolSelected(tools['baseShape']);
+    const isBaseShapeSelected = useIsToolSelected(tools['baseShape']);
+    const isCardShapeSelected = useIsToolSelected(tools['cardShape']);
     return (
       <DefaultToolbar {...props}>
         <DefaultToolbarContent />
-        <TldrawUiMenuItem {...tools['baseShape']} isSelected={isStickerSelected} />
+        <TldrawUiMenuItem {...tools['baseShape']} isSelected={isBaseShapeSelected} />
+        <TldrawUiMenuItem {...tools['cardShape']} isSelected={isCardShapeSelected} />
       </DefaultToolbar>
     );
   },
@@ -49,6 +61,7 @@ const components: TLComponents = {
       <DefaultKeyboardShortcutsDialog {...props}>
         <DefaultKeyboardShortcutsDialogContent />
         <TldrawUiMenuItem {...tools['baseShape']} />
+        <TldrawUiMenuItem {...tools['cardShape']} />
       </DefaultKeyboardShortcutsDialog>
     );
   },
@@ -60,7 +73,7 @@ const customAssetUrls: TLUiAssetUrlOverrides = {
   },
 };
 
-const customTools = [BaseShapeTool];
+const customTools = [BaseShapeTool, CardShapeTool];
 const MyCustomShapes = [BaseShapeUtil];
 
 export function TldrawOverride() {
