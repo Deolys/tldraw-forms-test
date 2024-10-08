@@ -17,32 +17,23 @@ export class CrossShapeTool extends StateNode {
   }
 }
 
-const CROSS_SHAPE_OFFSET = 260;
+const CROSS_SHAPE_OFFSET = 100;
+const CROSS_ITEM_SIZE = CROSS_SHAPE_OFFSET + 200;
 
 function createCrossShape(editor: Editor, pointerX: number, pointerY: number) {
   const groupTopId = createShapeId();
   createCardShape(editor, pointerX, pointerY, groupTopId);
 
   const groupLeftId = createShapeId();
-  createCardShape(
-    editor,
-    pointerX - CROSS_SHAPE_OFFSET,
-    pointerY + CROSS_SHAPE_OFFSET,
-    groupLeftId,
-  );
+  createCardShape(editor, pointerX - CROSS_ITEM_SIZE, pointerY + CROSS_ITEM_SIZE, groupLeftId);
 
   const groupCenterId = createShapeId();
-  createCardShape(editor, pointerX, pointerY + CROSS_SHAPE_OFFSET, groupCenterId);
+  createCardShape(editor, pointerX, pointerY + CROSS_ITEM_SIZE, groupCenterId);
 
   const groupRightId = createShapeId();
-  createCardShape(
-    editor,
-    pointerX + CROSS_SHAPE_OFFSET,
-    pointerY + CROSS_SHAPE_OFFSET,
-    groupRightId,
-  );
+  createCardShape(editor, pointerX + CROSS_ITEM_SIZE, pointerY + CROSS_ITEM_SIZE, groupRightId);
 
   const groupBottomId = createShapeId();
   const groupIds = [groupTopId, groupLeftId, groupCenterId, groupRightId, groupBottomId];
-  createCardShape(editor, pointerX, pointerY + CROSS_SHAPE_OFFSET * 2, groupBottomId, groupIds);
+  createCardShape(editor, pointerX, pointerY + CROSS_ITEM_SIZE * 2, groupBottomId, groupIds);
 }
