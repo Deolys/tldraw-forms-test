@@ -4,6 +4,7 @@ import {
   Editor,
   FileHelpers,
   StateNode,
+  TLShapeId,
   createShapeId,
 } from 'tldraw';
 
@@ -18,15 +19,18 @@ export class CardShapeTool extends StateNode {
     const editor = this.editor;
     const { currentPagePoint } = editor.inputs;
     const { x: pointerX, y: pointerY } = currentPagePoint;
-    createCardShape(editor, pointerX, pointerY);
-    // createCardShape(editor, pointerX - 260, pointerY + 260);
-    // createCardShape(editor, pointerX, pointerY + 260);
-    // createCardShape(editor, pointerX + 260, pointerY + 260);
-    // createCardShape(editor, pointerX, pointerY + 520);
+    const groupId = createShapeId();
+    createCardShape(editor, pointerX, pointerY, groupId);
   }
 }
 
-export function createCardShape(editor: Editor, pointerX: number, pointerY: number) {
+export function createCardShape(
+  editor: Editor,
+  pointerX: number,
+  pointerY: number,
+  groupId: TLShapeId,
+  groupIds?: TLShapeId[],
+) {
   const input = window.document.createElement('input');
   input.type = 'file';
   input.accept = DEFAULT_SUPPORTED_MEDIA_TYPE_LIST;
@@ -91,9 +95,14 @@ export function createCardShape(editor: Editor, pointerX: number, pointerY: numb
       });
 
       editor.select(imageId, textId);
+      editor.setCurrentTool('select');
       const group = editor.getSelectedShapeIds();
-      const groupId = createShapeId();
       editor.groupShapes(group, { groupId: groupId });
+
+      if (groupIds?.length === 5) {
+        const bigGroupId = createShapeId();
+        editor.groupShapes(groupIds, { groupId: bigGroupId });
+      }
     } catch (e) {
       console.error(e);
     }
