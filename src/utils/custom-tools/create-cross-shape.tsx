@@ -17,8 +17,10 @@ export class CrossShapeTool extends StateNode {
   }
 }
 
-const CROSS_SHAPE_OFFSET = 100;
-const CROSS_ITEM_SIZE = CROSS_SHAPE_OFFSET + 200;
+export const CROSS_SHAPE_OFFSET = 40;
+export const TEXT_HEIGHT = 32;
+export const OFFSET_WITH_TEXT_DIST = CROSS_SHAPE_OFFSET + TEXT_HEIGHT;
+export const CROSS_ITEM_SIZE = CROSS_SHAPE_OFFSET + TEXT_HEIGHT + 168;
 
 function createCrossShape(editor: Editor, pointerX: number, pointerY: number) {
   const groupTopId = createShapeId();

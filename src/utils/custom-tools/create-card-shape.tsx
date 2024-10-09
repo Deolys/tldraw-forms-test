@@ -27,7 +27,7 @@ export function createCardShape(
 ) {
   const imageUrl = catImage;
   const w = 200;
-  const h = 200;
+  const h = 168;
   const type = 'image/jpeg';
 
   const assetId = AssetRecordType.createId();
@@ -87,22 +87,55 @@ export function createCardShape(
   if (groupIds?.length === 5) {
     const bigGroupId = createShapeId();
     editor.groupShapes(groupIds, { groupId: bigGroupId });
-    editor.updateShape({ id: bigGroupId, type: 'group', meta: { childrenIds: groupIds } });
+    editor.updateShape({
+      id: bigGroupId,
+      type: 'group',
+      meta: { childrenIds: groupIds, rotation: 0 },
+    });
 
     editor.sideEffects.registerAfterChangeHandler('shape', (prev, next) => {
-      if (next.id === bigGroupId) {
-        const selectedShapeId = editor.getSelectedShapeIds()[0];
-        const selectedShape = editor.getShape(selectedShapeId);
+      if (next.id === bigGroupId && prev.rotation !== next.rotation && prev.x !== next.x) {
+        /** Если нужно видеть, в каком положении будут карточки
+         groupIds.forEach((cardId) => {
+          editor.updateShape({
+            id: cardId,
+            type: 'group',
+            rotation: -next.rotation,
+          });
+        }); **/
+        editor.getShapeUtil('group').onRotateEnd = (initial, current) => {
+          if (!initial.meta.childrenIds) {
+            return;
+          }
 
-        if (selectedShape && selectedShapeId === bigGroupId) {
+          const bigGroupBounds = editor.getShapePageBounds(bigGroupId)!;
+          const bigGroupCenter = {
+            x: bigGroupBounds.x + bigGroupBounds.w / 2,
+            y: bigGroupBounds.y + bigGroupBounds.h / 2,
+            z: 20,
+          };
+
+          groupIds.forEach((cardId) => {
+            const card = editor.getShape(cardId)!;
+            editor.rotateShapesBy([card], current.rotation, { center: bigGroupCenter });
+          });
+
+          editor.updateShape({
+            id: bigGroupId,
+            type: 'group',
+            rotation: 0,
+            x: initial.x,
+            y: initial.y,
+          });
+
           groupIds.forEach((cardId) => {
             editor.updateShape({
               id: cardId,
               type: 'group',
-              rotation: -selectedShape.rotation,
+              rotation: 0,
             });
           });
-        }
+        };
       }
     });
   }
